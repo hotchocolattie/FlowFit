@@ -60,6 +60,15 @@ flutter:
   assets:
     - assets/images/cat_default.png
     - assets/images/cat_mouth_open.png
+
+  fonts:
+    - family: PlayfairDisplay
+      fonts:
+        - asset: assets/fonts/PlayfairDisplay-VariableFont_wght.ttf
+
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-VariableFont_opsz,wght.ttf
   # To add assets to your application, add an assets section, like this:
 
 
