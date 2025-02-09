@@ -9,7 +9,7 @@ class Landing extends StatelessWidget {
       width: 412,
       height: 917,
       clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(color: Color(0xFFFAF6F0)),
+      decoration: BoxDecoration(color: Color(0xFFFAF4F0)),
       child: Stack(
         children: [
           Positioned(

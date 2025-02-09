@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:winghacksflowfit/user_data_variables.dart';
 import 'dart:async';
 import 'home.dart';
+import 'inputs.dart';
+import 'user_data_variables.dart';
+import 'chatgpt.dart';
+import 'package:provider/provider.dart';
+
 
 class BackgroundRectangle extends StatelessWidget {
   const BackgroundRectangle({super.key});
@@ -144,22 +150,26 @@ class _CatTalkState extends State<CatTalk> {
 // button widget (haha its reusable now!!!)
 class DefaultButton extends StatelessWidget {
   final String text;
-  final Widget destination;
+  final Widget Function(BuildContext, dynamic) destinationBuilder;  // Change to a function that returns a Widget
+  final dynamic userCycleData;
 
   const DefaultButton({
     Key? key,
     required this.text,
-    required this.destination,
+    required this.destinationBuilder,
+    required this.userCycleData,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // nav to destination page when pressed
+
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => destination),
+          MaterialPageRoute(
+            builder: (context) => destinationBuilder(context, userCycleData),
+          ),
         );
       },
       child: Container(
@@ -172,8 +182,6 @@ class DefaultButton extends StatelessWidget {
           ),
         ),
         child: Center(
-
-          // custom text here haha
           child: Text(
             text,
             textAlign: TextAlign.center,
@@ -192,60 +200,39 @@ class DefaultButton extends StatelessWidget {
 
 
 
+
+
 // chatgpt textbox
 class AIResponse extends StatelessWidget {
-  final String text;
-
-  const AIResponse({
-    Key? key,
-    required this.text,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-
-    return Column(
-      children: [
-        SizedBox(
-          width: 350,
-          height: 40,
-          child: Text(
-            'Here are some suggestions:',
-            style: TextStyle(
-              color: Color(0xFF7A5E52),
-              fontSize: 20,
-              fontFamily: 'PlayfairDisplay',
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-    ),
-
-        Container(
-          height: MediaQuery.of(context).size.height * (0.34),
-          width: MediaQuery.of(context).size.width * (4 / 5),
-          child: RawScrollbar(
-            thumbVisibility: true,
-            thumbColor: Color(0xFFDDA9A2),
-            thickness: 8,
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-              child: Text(
-                text, // Your dynamic text goes here
-                style: const TextStyle(
-                color: Color(0xFF2B170F),
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                fontFamily: "Inter",
-                ),
-              ),
-            ),
-          ),
-        )
-      ]
+    return Consumer<UserDataVariables>(
+      builder: (context, userData, _) {
+        return FutureBuilder<String>(
+          future: GPTService().getResponse({
+            'age': userData.age,
+            'lastPeriod': userData.lastPeriod,
+            'avgPeriodLength': userData.avgPeriodLength,
+            'avgCycleLength': userData.avgCycleLength,
+          }),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text("Error fetching AI response");
+            } else {
+              return Text(
+                snapshot.data ?? "No response available",
+                style: TextStyle(fontSize: 16, color: Colors.black),
+              );
+            }
+          },
+        );
+      },
     );
-
   }
 }
+
 
 
 class BigCat extends StatelessWidget {
@@ -260,7 +247,7 @@ class BigCat extends StatelessWidget {
         // cat goes home when pressed!
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const Home()),
+          MaterialPageRoute(builder: (context) => InputPage()),
         );
       },
       child: Column(

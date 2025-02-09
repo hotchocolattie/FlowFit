@@ -9,6 +9,9 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Example of user cycle data (replace with actual data)
+    final dynamic userCycleData = 'User Cycle Data Here';
+
     return Scaffold(
       //everything under appbar is body
       body: Stack(
@@ -36,42 +39,37 @@ class Home extends StatelessWidget {
                     ),
                   ),
                 ),
-
-                SizedBox(
-                  height:20,
-                ),
+                SizedBox(height: 20),
 
                 // Workouts Button
                 DefaultButton(
-                  text: 'Workouts',
-                  destination: Workouts(),
+                  text: "Workouts",
+                  destinationBuilder: (context, userCycleData) => Workouts(userCycleData: userCycleData),
+                  userCycleData: userCycleData,
                 ),
 
-                SizedBox(
-                  height:20,
-                ),
+                SizedBox(height: 20),
 
+                // Meal Prep Button
                 DefaultButton(
-                  text: 'Meal Prep',
-                  destination: MealPrep(),
+                  text: "Meal Prep",
+                  destinationBuilder: (context, userCycleData) => Workouts(userCycleData: userCycleData),
+                  userCycleData: userCycleData,
                 ),
 
-                SizedBox(
-                  height:20,
-                ),
+                SizedBox(height: 20),
 
+                // Health Info Button
                 DefaultButton(
-                  text: 'Health Info',
-                  destination: HealthInfo(),
+                  text: "Health Info",
+                  destinationBuilder: (context, userCycleData) => HealthInfo(userCycleData: userCycleData),
+                  userCycleData: userCycleData,
                 ),
-
-              ]
-            )
+              ],
+            ),
           ),
-
         ],
-      )
+      ),
     );
   }
 }
-
