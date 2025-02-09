@@ -5,7 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class GPTService {
   Future<String> getResponse(Map<String, dynamic> userCycleData) async {
     // Load API key from environment variables
-    final apiKey = dotenv.env['API_KEY'] ?? 'YOUR_NEW_API_KEY';
+    //final apiKey = dotenv.env['API_KEY'] ?? 'YOUR_NEW_API_KEY';
 
     final prompt = generatePrompt(userCycleData);
 
