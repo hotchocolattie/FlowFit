@@ -244,7 +244,34 @@ class AIResponse extends StatelessWidget {
       ]
     );
 
+  }
+}
 
 
+class BigCat extends StatelessWidget {
+
+  const BigCat({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+
+        // cat goes home when pressed!
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const Home()),
+        );
+      },
+      child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              'assets/images/cat_default.png',
+              width: MediaQuery.of(context).size.width,
+            ),
+          ]
+      ),
+    );
   }
 }

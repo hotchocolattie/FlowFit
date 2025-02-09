@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'landing.dart';
 import 'home.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: Home()
+    home: Landing()
   ));
 }
 
